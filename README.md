@@ -90,8 +90,12 @@ php -S localhost:8000
 then open http://localhost:8000/
 
 Demo logins from the seed file (password is `password123`):
-- alice@uni.edu (student)
-- drsmith@uni.edu (teacher)
+- alice@g.bracu.ac.bd (student)
+- drsmith@bracu.ac.bd (teacher)
+
+Account policy: students must register with their BRACU G-Suite address
+(`@g.bracu.ac.bd`); faculty must register with `@bracu.ac.bd`. This is
+enforced in `auth/register.php`.
 
 ## Notes
 

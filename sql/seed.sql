@@ -3,14 +3,14 @@
 
 USE thesis_finder;
 
-SET @pw := '$2y$10$O8u8TfN0J6vUa3F7pJ5m4OJQnQ5Kf8k2mQxJk0kYZ/Zj1C9mQ3V5C';
+SET @pw := '$2y$12$6FUQhRWTZQwtk/cwZCRwiuUulCIX21it3R6GFycQOgucfkkXri.q6';
 
 INSERT INTO user (email, password, name, student_flag, teacher_flag) VALUES
- ('alice@uni.edu',  @pw, 'Alice Rahman',   1, 0),
- ('bob@uni.edu',    @pw, 'Bob Khan',       1, 0),
- ('carol@uni.edu',  @pw, 'Carol Ahmed',    1, 0),
- ('drsmith@uni.edu',@pw, 'Dr. Smith',      0, 1),
- ('drjane@uni.edu', @pw, 'Dr. Jane Doe',   0, 1);
+ ('alice@g.bracu.ac.bd',    @pw, 'Alice Rahman', 1, 0),
+ ('bob@g.bracu.ac.bd',      @pw, 'Bob Khan',     1, 0),
+ ('carol@g.bracu.ac.bd',    @pw, 'Carol Ahmed',  1, 0),
+ ('drsmith@bracu.ac.bd',    @pw, 'Dr. Smith',    0, 1),
+ ('drjane@bracu.ac.bd',     @pw, 'Dr. Jane Doe', 0, 1);
 
 INSERT INTO student (user_id, cgpa, preferable_coding_language, thesis_starting_time, project_starting_time, dept, semester, undergrad_flag, postgrad_flag) VALUES
  (1, 3.85, 'Python',     'Spring 2026', 'Fall 2025', 'CSE', '8th', 1, 0),

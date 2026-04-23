@@ -21,6 +21,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($password !== $confirm)                    $errors[] = 'Passwords do not match.';
     if (!in_array($role, ['student', 'teacher'], true)) $errors[] = 'Role must be student or teacher.';
 
+    $email_lower     = strtolower($email);
+    $is_student_mail = substr($email_lower, -strlen('@g.bracu.ac.bd')) === '@g.bracu.ac.bd';
+    $is_faculty_mail = !$is_student_mail
+        && substr($email_lower, -strlen('@bracu.ac.bd')) === '@bracu.ac.bd';
+
+    if ($role === 'student' && !$is_student_mail) {
+        $errors[] = 'Students must register with their BRACU G-Suite email (ending in @g.bracu.ac.bd).';
+    }
+    if ($role === 'teacher' && !$is_faculty_mail) {
+        $errors[] = 'Faculty must register with their BRACU email (ending in @bracu.ac.bd).';
+    }
+
     if (!$errors) {
         $chk = $conn->prepare('SELECT id FROM user WHERE email = ?');
         $chk->bind_param('s', $email);
@@ -88,6 +100,7 @@ require __DIR__ . '/../includes/header.php';
         <label>
             Email
             <input type="email" name="email" required value="<?= h($old['email']) ?>">
+            <small class="muted">Students: use your @g.bracu.ac.bd address. Faculty: use your @bracu.ac.bd address.</small>
         </label>
         <label>
             Password

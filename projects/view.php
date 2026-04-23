@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $s->execute(); $s->close();
             flash('success', 'Status removed.');
         }
-        elseif ($action === 'join' && is_student()) {
+        elseif ($action === 'join' && is_student() && $is_owner) {
             $s = $conn->prepare('INSERT IGNORE INTO student_join_project (project_id, id) VALUES (?, ?)');
             $s->bind_param('ii', $pid, $uid);
             $s->execute(); $s->close();

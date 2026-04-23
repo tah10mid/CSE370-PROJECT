@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ug   = isset($_POST['undergrad_flag']) ? 1 : 0;
             $pg   = isset($_POST['postgrad_flag'])  ? 1 : 0;
             $s = $conn->prepare('UPDATE student SET cgpa=?, preferable_coding_language=?, thesis_starting_time=?, project_starting_time=?, dept=?, semester=?, undergrad_flag=?, postgrad_flag=? WHERE user_id=?');
-            $s->bind_param('dssssssii', $cgpa, $lang, $tst, $pst, $dept, $sem, $ug, $pg, $uid);
+            $s->bind_param('dsssssiii', $cgpa, $lang, $tst, $pst, $dept, $sem, $ug, $pg, $uid);
             $s->execute();
             $s->close();
             flash('success', 'Student info saved.');
