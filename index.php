@@ -1,0 +1,37 @@
+<?php
+require_once __DIR__ . '/includes/auth.php';
+if (is_logged_in()) {
+    redirect('/dashboard.php');
+}
+$page_title = 'Welcome';
+require __DIR__ . '/includes/header.php';
+?>
+
+<section class="hero">
+    <h1>Find the right thesis. Find the right team.</h1>
+    <p class="lead">
+        ThesisFinder connects students and supervisors on thesis and project ideas.
+        Post your work, join teams, talk to supervisors, and keep everything in one place.
+    </p>
+    <div class="hero-actions">
+        <a class="btn btn-primary" href="/auth/register.php">Get started</a>
+        <a class="btn btn-ghost" href="/auth/login.php">I already have an account</a>
+    </div>
+</section>
+
+<section class="features">
+    <div class="card">
+        <h3>Post thesis &amp; projects</h3>
+        <p>Students and teachers can post work with title, description, and supervision info.</p>
+    </div>
+    <div class="card">
+        <h3>Team requests</h3>
+        <p>Ask to join a project. Owners accept or reject. Status updates in real time.</p>
+    </div>
+    <div class="card">
+        <h3>Direct messaging</h3>
+        <p>Chat with teammates and supervisors straight from the platform.</p>
+    </div>
+</section>
+
+<?php require __DIR__ . '/includes/footer.php'; ?>
