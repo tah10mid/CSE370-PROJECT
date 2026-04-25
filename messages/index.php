@@ -47,7 +47,7 @@ require __DIR__ . '/../includes/header.php';
             <ul class="list">
                 <?php foreach ($convos as $c): ?>
                     <li>
-                        <a href="/messages/thread.php?with=<?= (int)$c['other_id'] ?>"><strong><?= h($c['other_name']) ?></strong></a>
+                        <a href="<?= url('/messages/thread.php') ?>?with=<?= (int)$c['other_id'] ?>"><strong><?= h($c['other_name']) ?></strong></a>
                         <div><?= h(mb_strimwidth($c['body'], 0, 120, '...')) ?></div>
                         <div class="muted small"><?= h($c['sent_at']) ?></div>
                     </li>
@@ -58,7 +58,7 @@ require __DIR__ . '/../includes/header.php';
 
     <section class="card">
         <h2>Start a new chat</h2>
-        <form method="get" action="/messages/thread.php" class="form-row">
+        <form method="get" action="<?= url('/messages/thread.php') ?>" class="form-row">
             <label>To
                 <select name="with" required>
                     <option value="">Select user</option>

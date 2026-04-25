@@ -63,15 +63,15 @@ require __DIR__ . '/includes/header.php';
     <section class="card">
         <div class="card-head">
             <h2>My Work</h2>
-            <a class="btn btn-primary btn-sm" href="/projects/create.php">+ New</a>
+            <a class="btn btn-primary btn-sm" href="<?= url('/projects/create.php') ?>">+ New</a>
         </div>
         <?php if (!$myWorks): ?>
-            <p class="muted">You haven't created or joined any work yet. <a href="/projects/index.php">Browse work</a>.</p>
+            <p class="muted">You haven't created or joined any work yet. <a href="<?= url('/projects/index.php') ?>">Browse work</a>.</p>
         <?php else: ?>
             <ul class="list">
                 <?php foreach ($myWorks as $w): ?>
                     <li>
-                        <a href="/projects/view.php?id=<?= (int)$w['project_id'] ?>"><strong><?= h($w['title']) ?></strong></a>
+                        <a href="<?= url('/projects/view.php') ?>?id=<?= (int)$w['project_id'] ?>"><strong><?= h($w['title']) ?></strong></a>
                         <span class="tags">
                             <?php if ($w['thesis_flag']):  ?><span class="tag tag-thesis">Thesis</span><?php endif; ?>
                             <?php if ($w['project_flag']): ?><span class="tag tag-project">Project</span><?php endif; ?>
@@ -87,7 +87,7 @@ require __DIR__ . '/includes/header.php';
     <section class="card">
         <div class="card-head">
             <h2>Incoming Requests</h2>
-            <a class="btn btn-ghost btn-sm" href="/requests/index.php">View all</a>
+            <a class="btn btn-ghost btn-sm" href="<?= url('/requests/index.php') ?>">View all</a>
         </div>
         <?php if (!$incoming): ?>
             <p class="muted">No team requests right now.</p>
@@ -99,7 +99,7 @@ require __DIR__ . '/includes/header.php';
                         <em><?= h($r['title']) ?></em>
                         <span class="tag"><?= h($r['status'] ?? 'pending') ?></span>
                         <div class="muted small"><?= h($r['requested_at']) ?></div>
-                        <a class="btn btn-sm" href="/requests/index.php#req-<?= (int)$r['request_id'] ?>">Review</a>
+                        <a class="btn btn-sm" href="<?= url('/requests/index.php') ?>#req-<?= (int)$r['request_id'] ?>">Review</a>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -110,7 +110,7 @@ require __DIR__ . '/includes/header.php';
 <section class="card">
     <div class="card-head">
         <h2>Latest Messages</h2>
-        <a class="btn btn-ghost btn-sm" href="/messages/index.php">Open inbox</a>
+        <a class="btn btn-ghost btn-sm" href="<?= url('/messages/index.php') ?>">Open inbox</a>
     </div>
     <?php if (!$latestMsgs): ?>
         <p class="muted">No messages yet.</p>

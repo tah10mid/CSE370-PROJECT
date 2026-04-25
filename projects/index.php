@@ -47,7 +47,7 @@ require __DIR__ . '/../includes/header.php';
 
 <div class="page-head">
     <h1>Browse Thesis &amp; Projects</h1>
-    <a class="btn btn-primary" href="/projects/create.php">+ Post new work</a>
+    <a class="btn btn-primary" href="<?= url('/projects/create.php') ?>">+ Post new work</a>
 </div>
 
 <form class="filters" method="get">
@@ -67,7 +67,7 @@ require __DIR__ . '/../includes/header.php';
 <div class="grid-2">
     <?php foreach ($rows as $w): ?>
         <article class="card work-card">
-            <h3><a href="/projects/view.php?id=<?= (int)$w['project_id'] ?>"><?= h($w['title']) ?></a></h3>
+            <h3><a href="<?= url('/projects/view.php') ?>?id=<?= (int)$w['project_id'] ?>"><?= h($w['title']) ?></a></h3>
             <div class="tags">
                 <?php if ($w['thesis_flag']):  ?><span class="tag tag-thesis">Thesis</span><?php endif; ?>
                 <?php if ($w['project_flag']): ?><span class="tag tag-project">Project</span><?php endif; ?>
@@ -79,7 +79,7 @@ require __DIR__ . '/../includes/header.php';
                 <?php if ($w['supervisor_name']): ?> &middot; supervised by <?= h($w['supervisor_name']) ?><?php endif; ?>
                 &middot; <?= h($w['created_at']) ?>
             </div>
-            <a class="btn btn-sm" href="/projects/view.php?id=<?= (int)$w['project_id'] ?>">Details</a>
+            <a class="btn btn-sm" href="<?= url('/projects/view.php') ?>?id=<?= (int)$w['project_id'] ?>">Details</a>
         </article>
     <?php endforeach; ?>
 </div>

@@ -14,8 +14,8 @@ require __DIR__ . '/includes/header.php';
         Post your work, join teams, talk to supervisors, and keep everything in one place.
     </p>
     <div class="hero-actions">
-        <a class="btn btn-primary" href="/auth/register.php">Get started</a>
-        <a class="btn btn-ghost" href="/auth/login.php">I already have an account</a>
+        <a class="btn btn-primary" href="<?= url('/auth/register.php') ?>">Get started</a>
+        <a class="btn btn-ghost" href="<?= url('/auth/login.php') ?>">I already have an account</a>
     </div>
 </section>
 

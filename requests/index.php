@@ -94,7 +94,7 @@ require __DIR__ . '/../includes/header.php';
             <?php foreach ($incoming as $r): ?>
                 <tr id="req-<?= (int)$r['request_id'] ?>">
                     <td><?= h($r['requester_name']) ?></td>
-                    <td><a href="/projects/view.php?id=<?= (int)$r['project_id'] ?>"><?= h($r['title']) ?></a></td>
+                    <td><a href="<?= url('/projects/view.php') ?>?id=<?= (int)$r['project_id'] ?>"><?= h($r['title']) ?></a></td>
                     <td class="muted small"><?= h($r['requested_at']) ?></td>
                     <td><span class="tag"><?= h($r['status'] ?? 'pending') ?></span></td>
                     <td>
@@ -105,7 +105,7 @@ require __DIR__ . '/../includes/header.php';
                                 <button class="btn btn-sm btn-danger"  name="action" value="reject">Reject</button>
                             </form>
                         <?php endif; ?>
-                        <a class="btn btn-sm btn-ghost" href="/messages/thread.php?with=<?= (int)$r['requester_id'] ?>">Message</a>
+                        <a class="btn btn-sm btn-ghost" href="<?= url('/messages/thread.php') ?>?with=<?= (int)$r['requester_id'] ?>">Message</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -124,7 +124,7 @@ require __DIR__ . '/../includes/header.php';
             <tbody>
             <?php foreach ($outgoing as $r): ?>
                 <tr>
-                    <td><a href="/projects/view.php?id=<?= (int)$r['project_id'] ?>"><?= h($r['title']) ?></a></td>
+                    <td><a href="<?= url('/projects/view.php') ?>?id=<?= (int)$r['project_id'] ?>"><?= h($r['title']) ?></a></td>
                     <td><?= h($r['owner_name']) ?></td>
                     <td class="muted small"><?= h($r['requested_at']) ?></td>
                     <td><span class="tag"><?= h($r['status'] ?? 'pending') ?></span></td>

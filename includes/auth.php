@@ -3,13 +3,31 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Compute the URL prefix where the app is mounted (e.g. "" or "/cse370-project-main").
+if (!defined('BASE_URL')) {
+    $__base = '';
+    $docRoot  = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : '';
+    $projRoot = realpath(__DIR__ . '/..');
+    if ($docRoot && $projRoot && strpos($projRoot, $docRoot) === 0) {
+        $__base = str_replace('\\', '/', substr($projRoot, strlen($docRoot)));
+        $__base = '/' . trim($__base, '/');
+        if ($__base === '/') $__base = '';
+    }
+    define('BASE_URL', $__base);
+}
+
+function url(string $path): string {
+    if ($path === '' || $path[0] !== '/') $path = '/' . $path;
+    return BASE_URL . $path;
+}
+
 function is_logged_in(): bool {
     return isset($_SESSION['user_id']);
 }
 
 function require_login(): void {
     if (!is_logged_in()) {
-        header('Location: /auth/login.php');
+        header('Location: ' . url('/auth/login.php'));
         exit;
     }
 }
@@ -60,6 +78,9 @@ function h(?string $s): string {
 }
 
 function redirect(string $path): void {
+    if ($path !== '' && $path[0] === '/' && strpos($path, '//') !== 0) {
+        $path = url($path);
+    }
     header('Location: ' . $path);
     exit;
 }

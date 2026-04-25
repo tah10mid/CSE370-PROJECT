@@ -52,7 +52,7 @@ require __DIR__ . '/../includes/header.php';
         </label>
         <button class="btn btn-primary" type="submit">Log in</button>
     </form>
-    <p class="muted">No account? <a href="/auth/register.php">Register here</a>.</p>
+    <p class="muted">No account? <a href="<?= url('/auth/register.php') ?>">Register here</a>.</p>
 </div>
 
 <?php require __DIR__ . '/../includes/footer.php'; ?>

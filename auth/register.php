@@ -123,7 +123,7 @@ require __DIR__ . '/../includes/header.php';
         </fieldset>
         <button class="btn btn-primary" type="submit">Create account</button>
     </form>
-    <p class="muted">Already registered? <a href="/auth/login.php">Log in</a>.</p>
+    <p class="muted">Already registered? <a href="<?= url('/auth/login.php') ?>">Log in</a>.</p>
 </div>
 
 <?php require __DIR__ . '/../includes/footer.php'; ?>

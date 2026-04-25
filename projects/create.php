@@ -95,7 +95,7 @@ require __DIR__ . '/../includes/header.php';
         </select>
     </label>
     <button class="btn btn-primary" type="submit">Create</button>
-    <a class="btn btn-ghost" href="/projects/index.php">Cancel</a>
+    <a class="btn btn-ghost" href="<?= url('/projects/index.php') ?>">Cancel</a>
 </form>
 
 <?php require __DIR__ . '/../includes/footer.php'; ?>

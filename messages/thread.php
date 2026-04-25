@@ -76,7 +76,7 @@ require __DIR__ . '/../includes/header.php';
 
 <div class="page-head">
     <h1>Chat with <?= h($peer['name']) ?></h1>
-    <a class="btn btn-ghost" href="/messages/index.php">Back to inbox</a>
+    <a class="btn btn-ghost" href="<?= url('/messages/index.php') ?>">Back to inbox</a>
 </div>
 
 <section class="card chat">
