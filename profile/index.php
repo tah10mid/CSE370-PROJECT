@@ -53,11 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $allowed = [
                 'user_previous_work'        => ['user_id','previous_work'],
                 'user_project_interest'     => ['user_id','project_interest'],
-                'user_project_iskill'       => ['user_id','skill'],
+                'user_project_skill'       => ['user_id','skill'],
                 'user_thesis_interest'      => ['user_id','thesis_interest'],
                 'teacher_project_interest'  => ['id','project_interest'],
                 'teacher_thesis_interest'   => ['id','thesis_interest'],
-                'teacher_thesisslot'        => ['id','thesis_slot'],
+                'teacher_thesis_slot'        => ['id','thesis_slot'],
             ];
             if (!isset($allowed[$table]) || $allowed[$table][0] !== $keyCol || $allowed[$table][1] !== $col) {
                 throw new Exception('Invalid list.');
@@ -80,11 +80,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $allowed = [
                 'user_previous_work'        => ['user_id','previous_work'],
                 'user_project_interest'     => ['user_id','project_interest'],
-                'user_project_iskill'       => ['user_id','skill'],
+                'user_project_skill'       => ['user_id','skill'],
                 'user_thesis_interest'      => ['user_id','thesis_interest'],
                 'teacher_project_interest'  => ['id','project_interest'],
                 'teacher_thesis_interest'   => ['id','thesis_interest'],
-                'teacher_thesisslot'        => ['id','thesis_slot'],
+                'teacher_thesis_slot'        => ['id','thesis_slot'],
             ];
             if (!isset($allowed[$table]) || $allowed[$table][0] !== $keyCol || $allowed[$table][1] !== $col) {
                 throw new Exception('Invalid list.');
@@ -127,7 +127,7 @@ function list_mv(mysqli $c, string $table, string $keyCol, string $col, int $uid
     return array_column($r, 'v');
 }
 
-$skills          = list_mv($conn, 'user_project_iskill',      'user_id', 'skill',            $uid);
+$skills          = list_mv($conn, 'user_project_skill',      'user_id', 'skill',            $uid);
 $projInterests   = list_mv($conn, 'user_project_interest',    'user_id', 'project_interest', $uid);
 $thesisInterests = list_mv($conn, 'user_thesis_interest',     'user_id', 'thesis_interest',  $uid);
 $prevWork        = list_mv($conn, 'user_previous_work',       'user_id', 'previous_work',    $uid);
@@ -135,7 +135,7 @@ $tProjInt = $tThesisInt = $tSlots = [];
 if (is_teacher()) {
     $tProjInt   = list_mv($conn, 'teacher_project_interest', 'id', 'project_interest', $uid);
     $tThesisInt = list_mv($conn, 'teacher_thesis_interest',  'id', 'thesis_interest',  $uid);
-    $tSlots     = list_mv($conn, 'teacher_thesisslot',       'id', 'thesis_slot',      $uid);
+    $tSlots     = list_mv($conn, 'teacher_thesis_slot',       'id', 'thesis_slot',      $uid);
 }
 
 $page_title = 'My Profile';
@@ -216,7 +216,7 @@ function mv_form(string $table, string $keyCol, string $col, array $items, strin
 <section class="card">
     <h2>Skills &amp; Interests</h2>
     <?php
-        mv_form('user_project_iskill',   'user_id', 'skill',            $skills,          'Skill');
+        mv_form('user_project_skill',   'user_id', 'skill',            $skills,          'Skill');
         mv_form('user_project_interest', 'user_id', 'project_interest', $projInterests,   'Project interest');
         mv_form('user_thesis_interest',  'user_id', 'thesis_interest',  $thesisInterests, 'Thesis interest');
         mv_form('user_previous_work',    'user_id', 'previous_work',    $prevWork,        'Previous work');
@@ -229,7 +229,7 @@ function mv_form(string $table, string $keyCol, string $col, array $items, strin
     <?php
         mv_form('teacher_project_interest', 'id', 'project_interest', $tProjInt,   'Supervision project area');
         mv_form('teacher_thesis_interest',  'id', 'thesis_interest',  $tThesisInt, 'Supervision thesis area');
-        mv_form('teacher_thesisslot',       'id', 'thesis_slot',      $tSlots,     'Thesis slot');
+        mv_form('teacher_thesis_slot',       'id', 'thesis_slot',      $tSlots,     'Thesis slot');
     ?>
 </section>
 <?php endif; ?>

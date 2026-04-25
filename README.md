@@ -66,8 +66,8 @@ assets/css/style.css    styles
 | USER                                        | `user` |
 | Student ISA User                            | `student` |
 | Teacher ISA User                            | `teacher` |
-| User multivalued (skill, interests, prev)   | `user_project_iskill`, `user_project_interest`, `user_thesis_interest`, `user_previous_work` |
-| Teacher multivalued                         | `teacher_project_interest`, `teacher_thesis_interest`, `teacher_thesisslot` |
+| User multivalued (skill, interests, prev)   | `user_project_skill`, `user_project_interest`, `user_thesis_interest`, `user_previous_work` |
+| Teacher multivalued                         | `teacher_project_interest`, `teacher_thesis_interest`, `teacher_thesis_slot` |
 | Work (thesis disjoint project)              | `work` (+ `project_status` multivalued) |
 | supervises                                  | `work.supervisor_id` FK to `teacher.user_id` |
 | joins                                       | `student_join_project` |

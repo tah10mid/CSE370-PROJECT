@@ -29,11 +29,11 @@ INSERT INTO teacher_thesis_interest (id, thesis_interest) VALUES
  (4, 'Deep Learning'),    (4, 'Ethical AI'),
  (5, 'Robotics'),         (5, 'Edge Computing');
 
-INSERT INTO teacher_thesisslot (id, thesis_slot) VALUES
+INSERT INTO teacher_thesis_slot (id, thesis_slot) VALUES
  (4, 'Spring 2026'), (4, 'Fall 2026'),
  (5, 'Summer 2025'), (5, 'Spring 2026');
 
-INSERT INTO user_project_iskill (user_id, skill) VALUES
+INSERT INTO user_project_skill (user_id, skill) VALUES
  (1, 'Python'), (1, 'TensorFlow'),
  (2, 'Java'),   (2, 'Spring Boot'),
  (3, 'C++'),    (3, 'OpenCV');

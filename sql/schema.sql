@@ -54,7 +54,7 @@ CREATE TABLE teacher_thesis_interest (
     CONSTRAINT fk_tti_teacher FOREIGN KEY (id) REFERENCES teacher(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE teacher_thesisslot (
+CREATE TABLE teacher_thesis_slot (
     id          INT NOT NULL,
     thesis_slot VARCHAR(120) NOT NULL,
     PRIMARY KEY (id, thesis_slot),
@@ -76,7 +76,7 @@ CREATE TABLE user_project_interest (
     CONSTRAINT fk_upi_user FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE user_project_iskill (
+CREATE TABLE user_project_skill (
     user_id INT NOT NULL,
     skill   VARCHAR(120) NOT NULL,
     PRIMARY KEY (user_id, skill),
