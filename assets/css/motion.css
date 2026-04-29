@@ -325,5 +325,32 @@ body.is-loaded .hero > *:nth-child(3) { transition-delay: 240ms; }
 /* --------------------------------------------------------------------
    Brand subtle motion
    -------------------------------------------------------------------- */
-.brand { transition: transform var(--motion-fast) var(--ease-spring); }
-.brand:hover { transform: scale(1.04); }
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #1f2430;
+    text-decoration: none;
+    transition: transform var(--motion-fast) var(--ease-spring);
+}
+.brand:hover { transform: scale(1.04); text-decoration: none; }
+.brand-mark {
+    width: 26px;
+    height: 26px;
+    color: var(--accent);
+    flex: 0 0 auto;
+}
+.brand-mark .brand-glass {
+    transform-origin: 22px 22px;
+    transition: transform var(--motion-base) var(--ease-spring);
+}
+.brand:hover .brand-mark .brand-glass { transform: rotate(-14deg); }
+.brand-text {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    background: linear-gradient(90deg, var(--accent), #6f42ff);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+}

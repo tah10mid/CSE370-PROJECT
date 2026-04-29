@@ -14,7 +14,18 @@ $page_title = $page_title ?? 'Thesis Finder';
 <body>
 <header class="topbar">
     <div class="container topbar-inner">
-        <a class="brand" href="<?= url('/index.php') ?>">ThesisFinder</a>
+        <a class="brand" href="<?= url('/index.php') ?>" aria-label="ThesisFinder home">
+            <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                <rect x="5" y="3" width="17" height="22" rx="2.5" fill="currentColor" opacity=".14"/>
+                <rect x="5" y="3" width="17" height="22" rx="2.5" stroke="currentColor" stroke-width="2"/>
+                <path d="M9 8h9M9 12h9M9 16h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                <g class="brand-glass">
+                    <circle cx="22" cy="22" r="5.5" fill="#fff" stroke="currentColor" stroke-width="2"/>
+                    <path d="M25.7 25.7 29.5 29.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </g>
+            </svg>
+            <span class="brand-text">ThesisFinder</span>
+        </a>
         <nav class="nav">
             <?php if (is_logged_in()): ?>
                 <a href="<?= url('/dashboard.php') ?>">Dashboard</a>
