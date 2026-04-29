@@ -64,7 +64,7 @@ assets/css/style.css    styles
 | EER                                         | Table(s) |
 | ------------------------------------------- | -------- |
 | USER                                        | `user` |
-| Student ISA User                            | `student` |
+| Student ISA User                            | `student` (PK `student_id`, UNIQUE FK `user_id`) |
 | Teacher ISA User                            | `teacher` |
 | User multivalued (skill, interests, prev)   | `user_project_skill`, `user_project_interest`, `user_thesis_interest`, `user_previous_work` |
 | Teacher multivalued                         | `teacher_project_interest`, `teacher_thesis_interest`, `teacher_thesis_slot` |

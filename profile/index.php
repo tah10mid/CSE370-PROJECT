@@ -187,6 +187,7 @@ function mv_form(string $table, string $keyCol, string $col, array $items, strin
 <?php if (is_student()): ?>
 <section class="card">
     <h2>Student Details</h2>
+    <p class="muted small">Student ID: <strong><?= h($student['student_id']) ?></strong></p>
     <form method="post" class="form form-grid">
         <input type="hidden" name="action" value="update_student">
         <label>CGPA <input type="number" step="0.01" min="0" max="4" name="cgpa" value="<?= h($student['cgpa']) ?>"></label>
