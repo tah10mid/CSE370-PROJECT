@@ -62,7 +62,14 @@ require __DIR__ . '/../includes/header.php';
 </form>
 
 <?php if (!$rows): ?>
-    <p class="muted">No work matches the filters. Try posting a new one!</p>
+    <div class="empty-state card">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="28" cy="28" r="14"/>
+            <path d="M40 40l12 12"/>
+        </svg>
+        <p>No work matches your filters yet.</p>
+        <a class="btn btn-primary btn-sm" href="<?= url('/projects/create.php') ?>">Post the first one</a>
+    </div>
 <?php else: ?>
 <div class="grid-2">
     <?php foreach ($rows as $w): ?>

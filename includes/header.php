@@ -9,6 +9,7 @@ $page_title = $page_title ?? 'Thesis Finder';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= h($page_title) ?> &middot; Thesis Finder</title>
     <link rel="stylesheet" href="<?= url('/assets/css/style.css') ?>">
+    <link rel="stylesheet" href="<?= url('/assets/css/motion.css') ?>">
 </head>
 <body>
 <header class="topbar">
@@ -39,5 +40,5 @@ $page_title = $page_title ?? 'Thesis Finder';
 <?php
 $succ = flash('success');
 $err  = flash('error');
-if ($succ): ?><div class="alert alert-success"><?= h($succ) ?></div><?php endif;
-if ($err):  ?><div class="alert alert-error"><?= h($err)  ?></div><?php endif; ?>
+if ($succ): ?><div class="alert alert-success alert-toast"><?= h($succ) ?></div><?php endif;
+if ($err):  ?><div class="alert alert-error alert-toast"><?= h($err)  ?></div><?php endif; ?>

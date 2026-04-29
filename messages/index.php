@@ -42,7 +42,13 @@ require __DIR__ . '/../includes/header.php';
     <section class="card">
         <h2>Conversations</h2>
         <?php if (!$convos): ?>
-            <p class="muted">No conversations yet.</p>
+            <div class="empty-state">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M10 16h44v28H22l-8 8v-8h-4z"/>
+                    <path d="M20 26h24"/><path d="M20 34h16"/>
+                </svg>
+                <p>No conversations yet. Pick someone from the list to start chatting.</p>
+            </div>
         <?php else: ?>
             <ul class="list">
                 <?php foreach ($convos as $c): ?>

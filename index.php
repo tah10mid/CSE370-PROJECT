@@ -20,15 +20,15 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <section class="features">
-    <div class="card">
+    <div class="card" data-reveal>
         <h3>Post thesis &amp; projects</h3>
         <p>Students and teachers can post work with title, description, and supervision info.</p>
     </div>
-    <div class="card">
+    <div class="card" data-reveal>
         <h3>Team requests</h3>
         <p>Ask to join a project. Owners accept or reject. Status updates in real time.</p>
     </div>
-    <div class="card">
+    <div class="card" data-reveal>
         <h3>Direct messaging</h3>
         <p>Chat with teammates and supervisors straight from the platform.</p>
     </div>

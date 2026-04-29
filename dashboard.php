@@ -60,13 +60,20 @@ require __DIR__ . '/includes/header.php';
 <p class="muted">Quick look at your thesis / project activity.</p>
 
 <div class="grid-2">
-    <section class="card">
+    <section class="card" data-reveal>
         <div class="card-head">
             <h2>My Work</h2>
             <a class="btn btn-primary btn-sm" href="<?= url('/projects/create.php') ?>">+ New</a>
         </div>
         <?php if (!$myWorks): ?>
-            <p class="muted">You haven't created or joined any work yet. <a href="<?= url('/projects/index.php') ?>">Browse work</a>.</p>
+            <div class="empty-state">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="10" y="14" width="44" height="36" rx="3"/>
+                    <path d="M10 24h44"/><path d="M20 34h12"/><path d="M20 40h20"/>
+                </svg>
+                <p>No work yet. Post your first thesis or project.</p>
+                <a class="btn btn-primary btn-sm" href="<?= url('/projects/create.php') ?>">Post new work</a>
+            </div>
         <?php else: ?>
             <ul class="list">
                 <?php foreach ($myWorks as $w): ?>
@@ -84,13 +91,20 @@ require __DIR__ . '/includes/header.php';
         <?php endif; ?>
     </section>
 
-    <section class="card">
+    <section class="card" data-reveal>
         <div class="card-head">
             <h2>Incoming Requests</h2>
             <a class="btn btn-ghost btn-sm" href="<?= url('/requests/index.php') ?>">View all</a>
         </div>
         <?php if (!$incoming): ?>
-            <p class="muted">No team requests right now.</p>
+            <div class="empty-state">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="22" cy="26" r="6"/>
+                    <circle cx="42" cy="26" r="6"/>
+                    <path d="M12 50c2-6 7-9 10-9h20c3 0 8 3 10 9"/>
+                </svg>
+                <p>No team requests right now.</p>
+            </div>
         <?php else: ?>
             <ul class="list">
                 <?php foreach ($incoming as $r): ?>
@@ -107,13 +121,20 @@ require __DIR__ . '/includes/header.php';
     </section>
 </div>
 
-<section class="card">
+<section class="card" data-reveal>
     <div class="card-head">
         <h2>Latest Messages</h2>
         <a class="btn btn-ghost btn-sm" href="<?= url('/messages/index.php') ?>">Open inbox</a>
     </div>
     <?php if (!$latestMsgs): ?>
-        <p class="muted">No messages yet.</p>
+        <div class="empty-state">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M10 16h44v28H22l-8 8v-8h-4z"/>
+                <path d="M20 26h24"/><path d="M20 34h16"/>
+            </svg>
+            <p>No messages yet. Start a conversation.</p>
+            <a class="btn btn-ghost btn-sm" href="<?= url('/messages/index.php') ?>">Open inbox</a>
+        </div>
     <?php else: ?>
         <ul class="list">
             <?php foreach ($latestMsgs as $m): ?>

@@ -81,7 +81,13 @@ require __DIR__ . '/../includes/header.php';
 
 <section class="card chat">
     <?php if (!$messages): ?>
-        <p class="muted">No messages yet. Say hi!</p>
+        <div class="empty-state">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M10 16h44v28H22l-8 8v-8h-4z"/>
+                <path d="M28 30h8"/>
+            </svg>
+            <p>No messages yet. Say hi!</p>
+        </div>
     <?php else: ?>
         <ul class="chat-list">
             <?php foreach ($messages as $m):
