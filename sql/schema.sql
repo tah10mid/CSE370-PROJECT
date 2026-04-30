@@ -20,7 +20,7 @@ CREATE TABLE user (
 
 -- student ISA user
 CREATE TABLE student (
-    student_id                  INT AUTO_INCREMENT PRIMARY KEY,
+    student_id                  VARCHAR(20) PRIMARY KEY,
     user_id                     INT NOT NULL UNIQUE,
     cgpa                        DECIMAL(3,2),
     preferable_coding_language  VARCHAR(80),

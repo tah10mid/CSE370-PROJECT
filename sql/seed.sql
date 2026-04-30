@@ -12,10 +12,10 @@ INSERT INTO user (email, password, name, student_flag, teacher_flag) VALUES
  ('drsmith@bracu.ac.bd',    @pw, 'Dr. Smith',    0, 1),
  ('drjane@bracu.ac.bd',     @pw, 'Dr. Jane Doe', 0, 1);
 
-INSERT INTO student (user_id, cgpa, preferable_coding_language, thesis_starting_time, project_starting_time, dept, semester, undergrad_flag, postgrad_flag) VALUES
- (1, 3.85, 'Python',     'Spring 2026', 'Fall 2025', 'CSE', '8th', 1, 0),
- (2, 3.60, 'Java',       'Fall 2025',   'Spring 2026', 'CSE', '7th', 1, 0),
- (3, 3.90, 'C++',        'Spring 2026', 'Summer 2025','EEE', '6th', 1, 0);
+INSERT INTO student (student_id, user_id, cgpa, preferable_coding_language, thesis_starting_time, project_starting_time, dept, semester, undergrad_flag, postgrad_flag) VALUES
+ ('21301001', 1, 3.85, 'Python', 'Spring 2026', 'Fall 2025',   'CSE', '8th', 1, 0),
+ ('21301002', 2, 3.60, 'Java',   'Fall 2025',   'Spring 2026', 'CSE', '7th', 1, 0),
+ ('21301003', 3, 3.90, 'C++',    'Spring 2026', 'Summer 2025', 'EEE', '6th', 1, 0);
 
 INSERT INTO teacher (user_id, consultation_time) VALUES
  (4, 'Sun/Tue 3-5 PM'),

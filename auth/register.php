@@ -5,15 +5,16 @@ require_once __DIR__ . '/../includes/auth.php';
 if (is_logged_in()) redirect('/dashboard.php');
 
 $errors = [];
-$old = ['name' => '', 'email' => '', 'role' => 'student'];
+$old = ['name' => '', 'email' => '', 'role' => 'student', 'student_id' => ''];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name     = trim($_POST['name'] ?? '');
-    $email    = trim($_POST['email'] ?? '');
-    $password = (string)($_POST['password'] ?? '');
-    $confirm  = (string)($_POST['confirm']  ?? '');
-    $role     = $_POST['role'] ?? 'student';
-    $old      = ['name' => $name, 'email' => $email, 'role' => $role];
+    $name       = trim($_POST['name'] ?? '');
+    $email      = trim($_POST['email'] ?? '');
+    $password   = (string)($_POST['password'] ?? '');
+    $confirm    = (string)($_POST['confirm']  ?? '');
+    $role       = $_POST['role'] ?? 'student';
+    $student_id = trim($_POST['student_id'] ?? '');
+    $old        = ['name' => $name, 'email' => $email, 'role' => $role, 'student_id' => $student_id];
 
     if ($name === '')                              $errors[] = 'Name is required.';
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Valid email is required.';
@@ -31,6 +32,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($role === 'teacher' && !$is_faculty_mail) {
         $errors[] = 'Faculty must register with their BRACU email (ending in @bracu.ac.bd).';
+    }
+
+    if ($role === 'student') {
+        if ($student_id === '') {
+            $errors[] = 'Student ID is required.';
+        } elseif (!preg_match('/^[0-9]{5,10}$/', $student_id)) {
+            $errors[] = 'Student ID must be 5-10 digits (your BRACU ID).';
+        } else {
+            $chk = $conn->prepare('SELECT student_id FROM student WHERE student_id = ?');
+            $chk->bind_param('s', $student_id);
+            $chk->execute();
+            if ($chk->get_result()->fetch_assoc()) {
+                $errors[] = 'That Student ID is already registered.';
+            }
+            $chk->close();
+        }
     }
 
     if (!$errors) {
@@ -57,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ins->close();
 
             if ($role === 'student') {
-                $s = $conn->prepare('INSERT INTO student (user_id, undergrad_flag, postgrad_flag) VALUES (?, 1, 0)');
-                $s->bind_param('i', $uid);
+                $s = $conn->prepare('INSERT INTO student (student_id, user_id, undergrad_flag, postgrad_flag) VALUES (?, ?, 1, 0)');
+                $s->bind_param('si', $student_id, $uid);
                 $s->execute();
                 $s->close();
             } else {
@@ -121,9 +138,36 @@ require __DIR__ . '/../includes/header.php';
                 Teacher
             </label>
         </fieldset>
+        <label data-only-for="student" <?= $old['role'] === 'teacher' ? 'hidden' : '' ?>>
+            Student ID
+            <input type="text" name="student_id" inputmode="numeric" pattern="[0-9]{5,10}"
+                   placeholder="e.g. 21301234"
+                   value="<?= h($old['student_id']) ?>">
+            <small class="muted">Your BRACU student ID (5-10 digits).</small>
+        </label>
         <button class="btn btn-primary" type="submit">Create account</button>
     </form>
     <p class="muted">Already registered? <a href="<?= url('/auth/login.php') ?>">Log in</a>.</p>
 </div>
+
+<script>
+(function () {
+    var radios = document.querySelectorAll('input[name="role"]');
+    var sidField = document.querySelector('[data-only-for="student"]');
+    var sidInput = sidField ? sidField.querySelector('input') : null;
+    function sync() {
+        var role = document.querySelector('input[name="role"]:checked');
+        var isStudent = role && role.value === 'student';
+        if (!sidField) return;
+        sidField.hidden = !isStudent;
+        if (sidInput) {
+            sidInput.required = isStudent;
+            if (!isStudent) sidInput.value = '';
+        }
+    }
+    radios.forEach(function (r) { r.addEventListener('change', sync); });
+    sync();
+})();
+</script>
 
 <?php require __DIR__ . '/../includes/footer.php'; ?>
