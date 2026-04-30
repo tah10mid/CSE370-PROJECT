@@ -10,6 +10,7 @@ $page_title = $page_title ?? 'Thesis Finder';
     <title><?= h($page_title) ?> &middot; Thesis Finder</title>
     <link rel="stylesheet" href="<?= url('/assets/css/style.css') ?>">
     <link rel="stylesheet" href="<?= url('/assets/css/motion.css') ?>">
+    <link rel="stylesheet" href="<?= url('/assets/css/theme.css') ?>">
 </head>
 <body>
 <header class="topbar">

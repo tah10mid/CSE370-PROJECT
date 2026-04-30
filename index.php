@@ -8,13 +8,14 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="hero">
-    <h1>Find the right thesis. Find the right team.</h1>
+    <span class="hero-kicker">CSE370 &middot; BRAC University</span>
+    <h1>Find the right thesis.<br>Find the right team.</h1>
     <p class="lead">
-        ThesisFinder connects students and supervisors on thesis and project ideas.
-        Post your work, join teams, talk to supervisors, and keep everything in one place.
+        ThesisFinder connects students with supervisors and teammates on thesis and project ideas.
+        Post your work, join teams, message supervisors &mdash; everything in one place.
     </p>
     <div class="hero-actions">
-        <a class="btn btn-primary" href="<?= url('/auth/register.php') ?>">Get started</a>
+        <a class="btn btn-primary" href="<?= url('/auth/register.php') ?>">Get started &rarr;</a>
         <a class="btn btn-ghost" href="<?= url('/auth/login.php') ?>">I already have an account</a>
     </div>
 </section>
