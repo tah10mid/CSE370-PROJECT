@@ -93,6 +93,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $conn->commit();
             flash('success', 'Request sent to owner.');
         }
+        elseif ($action === 'cancel_request') {
+            // Only the original requester can cancel, and only while pending
+            $rid = (int)($_POST['request_id'] ?? 0);
+            $chk = $conn->prepare('
+                SELECT tr.request_id,
+                       (SELECT team_request_status FROM team_request_status trs
+                          WHERE trs.request_id = tr.request_id ORDER BY team_request_status LIMIT 1) AS status
+                FROM team_request tr
+                WHERE tr.request_id = ? AND tr.project_id = ? AND tr.requester_id = ?
+            ');
+            $chk->bind_param('iii', $rid, $pid, $uid);
+            $chk->execute();
+            $row = $chk->get_result()->fetch_assoc();
+            $chk->close();
+            if (!$row) throw new Exception('Request not found or not yours to cancel.');
+            if (($row['status'] ?? 'pending') !== 'pending') throw new Exception('You can only cancel a pending request.');
+
+            $d = $conn->prepare('DELETE FROM team_request WHERE request_id = ? AND requester_id = ?');
+            $d->bind_param('ii', $rid, $uid);
+            $d->execute(); $d->close();
+            flash('success', 'Request cancelled.');
+        }
     } catch (Throwable $e) {
         flash('error', $e->getMessage());
     }
@@ -178,6 +200,11 @@ require __DIR__ . '/../includes/header.php';
         <?php if (!$is_owner && !$is_joined): ?>
             <?php if ($myRequest && $myRequest['status'] === 'pending'): ?>
                 <span class="tag">Request pending</span>
+                <form method="post" onsubmit="return confirm('Cancel your pending request?');">
+                    <input type="hidden" name="action" value="cancel_request">
+                    <input type="hidden" name="request_id" value="<?= (int)$myRequest['request_id'] ?>">
+                    <button class="btn btn-danger btn-sm" type="submit">Cancel request</button>
+                </form>
             <?php else: ?>
                 <form method="post"><input type="hidden" name="action" value="request_join"><button class="btn btn-primary">Request to join team</button></form>
             <?php endif; ?>
