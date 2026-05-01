@@ -27,7 +27,7 @@ $convos = $st->get_result()->fetch_all(MYSQLI_ASSOC);
 $st->close();
 
 // All other users for starting a new chat
-$users = $conn->prepare('SELECT id, name, student_flag, teacher_flag FROM user WHERE id <> ? ORDER BY name');
+$users = $conn->prepare('SELECT id, name, email, student_flag, teacher_flag FROM user WHERE id <> ? ORDER BY name');
 $users->bind_param('i', $uid); $users->execute();
 $allUsers = $users->get_result()->fetch_all(MYSQLI_ASSOC);
 $users->close();
@@ -64,21 +64,129 @@ require __DIR__ . '/../includes/header.php';
 
     <section class="card">
         <h2>Start a new chat</h2>
-        <form method="get" action="<?= url('/messages/thread.php') ?>" class="form-row">
-            <label>To
-                <select name="with" required>
-                    <option value="">Select user</option>
-                    <?php foreach ($allUsers as $u): ?>
-                        <option value="<?= (int)$u['id'] ?>"><?= h($u['name']) ?><?php
-                            if ($u['teacher_flag']) echo ' (Teacher)';
-                            elseif ($u['student_flag']) echo ' (Student)';
-                        ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </label>
-            <button class="btn btn-primary" type="submit">Open</button>
-        </form>
+        <p class="muted small">Search anyone by name or email to start a conversation.</p>
+        <div class="user-search"
+             data-thread-url="<?= h(url('/messages/thread.php')) ?>"
+             data-users='<?= h(json_encode($allUsers, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)) ?>'>
+            <div class="user-search-input-row">
+                <span class="user-search-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="m20 20-3.5-3.5"/>
+                    </svg>
+                </span>
+                <input type="search" class="user-search-input"
+                       placeholder="Type a name or email..."
+                       autocomplete="off" aria-label="Search users">
+            </div>
+            <ul class="user-search-results" hidden></ul>
+            <p class="user-search-empty muted small" hidden>No matching users.</p>
+        </div>
     </section>
 </div>
+
+<script>
+(function () {
+    var box = document.querySelector('.user-search');
+    if (!box) return;
+    var input    = box.querySelector('.user-search-input');
+    var list     = box.querySelector('.user-search-results');
+    var emptyEl  = box.querySelector('.user-search-empty');
+    var users    = JSON.parse(box.dataset.users || '[]');
+    var threadUrl = box.dataset.threadUrl;
+    var activeIdx = -1;
+
+    function open(go) { window.location.href = threadUrl + '?with=' + go; }
+
+    function badge(u) {
+        if (u.teacher_flag) return 'Teacher';
+        if (u.student_flag) return 'Student';
+        return '';
+    }
+
+    function render(filter) {
+        var f = (filter || '').toLowerCase().trim();
+        list.innerHTML = '';
+        var matches = users.filter(function (u) {
+            if (!f) return true;
+            return (u.name && u.name.toLowerCase().indexOf(f) !== -1)
+                || (u.email && u.email.toLowerCase().indexOf(f) !== -1);
+        }).slice(0, 12);
+
+        matches.forEach(function (u, i) {
+            var li = document.createElement('li');
+            li.className = 'user-search-item';
+            li.dataset.id = u.id;
+            li.tabIndex = 0;
+
+            var avatar = document.createElement('span');
+            avatar.className = 'user-search-avatar';
+            avatar.textContent = (u.name || '?').charAt(0).toUpperCase();
+            li.appendChild(avatar);
+
+            var info = document.createElement('div');
+            info.className = 'user-search-info';
+            var nameEl = document.createElement('div');
+            nameEl.className = 'user-search-name';
+            nameEl.textContent = u.name;
+            info.appendChild(nameEl);
+            var emailEl = document.createElement('div');
+            emailEl.className = 'user-search-email muted small';
+            emailEl.textContent = u.email || '';
+            info.appendChild(emailEl);
+            li.appendChild(info);
+
+            var b = badge(u);
+            if (b) {
+                var tag = document.createElement('span');
+                tag.className = 'tag';
+                tag.textContent = b;
+                li.appendChild(tag);
+            }
+            list.appendChild(li);
+        });
+
+        if (matches.length === 0) {
+            list.hidden = true;
+            emptyEl.hidden = false;
+        } else {
+            list.hidden = false;
+            emptyEl.hidden = true;
+        }
+        activeIdx = -1;
+    }
+
+    function move(delta) {
+        var items = list.querySelectorAll('.user-search-item');
+        if (!items.length) return;
+        if (activeIdx >= 0) items[activeIdx].classList.remove('is-active');
+        activeIdx = (activeIdx + delta + items.length) % items.length;
+        items[activeIdx].classList.add('is-active');
+        items[activeIdx].scrollIntoView({ block: 'nearest' });
+    }
+
+    input.addEventListener('input', function () { render(input.value); });
+    input.addEventListener('focus', function () { render(input.value); });
+    input.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown')   { e.preventDefault(); move(+1); }
+        else if (e.key === 'ArrowUp'){ e.preventDefault(); move(-1); }
+        else if (e.key === 'Enter')  {
+            var items = list.querySelectorAll('.user-search-item');
+            if (items.length === 0) return;
+            var pick = activeIdx >= 0 ? items[activeIdx] : items[0];
+            if (pick) { e.preventDefault(); open(pick.dataset.id); }
+        } else if (e.key === 'Escape') {
+            list.hidden = true; emptyEl.hidden = true;
+        }
+    });
+    list.addEventListener('click', function (e) {
+        var li = e.target.closest('.user-search-item');
+        if (li) open(li.dataset.id);
+    });
+    document.addEventListener('click', function (e) {
+        if (!box.contains(e.target)) { list.hidden = true; emptyEl.hidden = true; }
+    });
+})();
+</script>
 
 <?php require __DIR__ . '/../includes/footer.php'; ?>

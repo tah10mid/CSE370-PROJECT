@@ -380,6 +380,87 @@ body::after {
 }
 
 /* --------------------------------------------------------------------
+   User search typeahead (messages/index.php)
+   -------------------------------------------------------------------- */
+.user-search { position: relative; margin-top: 8px; }
+.user-search-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    background: #fff;
+    transition: border-color var(--motion-fast) var(--ease-out),
+                box-shadow var(--motion-fast) var(--ease-out);
+}
+.user-search-input-row:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
+}
+.user-search-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--ink-faint);
+    flex: 0 0 auto;
+}
+.user-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px 0;
+    font: inherit;
+    outline: none;
+    width: 100%;
+}
+.user-search-results {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(99, 102, 241, 0.18);
+    max-height: 320px;
+    overflow-y: auto;
+}
+.user-search-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background var(--motion-fast) var(--ease-out);
+}
+.user-search-item:hover,
+.user-search-item.is-active {
+    background: rgba(99, 102, 241, 0.10);
+}
+.user-search-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    color: #fff;
+    font-weight: 700;
+    flex: 0 0 auto;
+}
+.user-search-info { flex: 1; min-width: 0; }
+.user-search-name { font-weight: 600; color: var(--ink); }
+.user-search-email { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-search-empty {
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px dashed var(--card-border);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* --------------------------------------------------------------------
    Teacher cards (teachers/index.php)
    -------------------------------------------------------------------- */
 .teacher-card { display: flex; flex-direction: column; gap: 14px; }
