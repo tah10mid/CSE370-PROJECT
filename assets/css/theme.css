@@ -328,6 +328,10 @@ body::after {
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
 }
 
+/* The HTML `hidden` attribute must always win over .form label display rules */
+.form [hidden],
+.form-card [hidden] { display: none !important; }
+
 /* --------------------------------------------------------------------
    Alerts / toasts
    -------------------------------------------------------------------- */
