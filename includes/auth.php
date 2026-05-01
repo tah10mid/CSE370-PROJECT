@@ -30,6 +30,28 @@ function require_login(): void {
         header('Location: ' . url('/auth/login.php'));
         exit;
     }
+    // Stale-session guard: if the database was reset while a user was logged
+    // in, their session id no longer exists in `user`. Verify and bounce them
+    // back to login instead of letting a foreign-key error blow up.
+    global $conn;
+    if (isset($conn) && $conn instanceof mysqli) {
+        $uid = (int)current_user_id();
+        $stmt = $conn->prepare('SELECT id, name, student_flag, teacher_flag FROM user WHERE id = ?');
+        $stmt->bind_param('i', $uid);
+        $stmt->execute();
+        $row = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        if (!$row) {
+            session_unset();
+            flash('error', 'Your session is no longer valid. Please log in again.');
+            header('Location: ' . url('/auth/login.php'));
+            exit;
+        }
+        // Refresh cached session data in case role flags or name changed.
+        $_SESSION['user_name']    = $row['name'];
+        $_SESSION['student_flag'] = (int)$row['student_flag'];
+        $_SESSION['teacher_flag'] = (int)$row['teacher_flag'];
+    }
 }
 
 function current_user_id(): ?int {
