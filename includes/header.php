@@ -31,6 +31,7 @@ $page_title = $page_title ?? 'Thesis Finder';
             <?php if (is_logged_in()): ?>
                 <a href="<?= url('/dashboard.php') ?>">Dashboard</a>
                 <a href="<?= url('/projects/index.php') ?>">Browse</a>
+                <a href="<?= url('/teachers/index.php') ?>">Teachers</a>
                 <a href="<?= url('/projects/create.php') ?>">New Work</a>
                 <a href="<?= url('/requests/index.php') ?>">Requests</a>
                 <a href="<?= url('/messages/index.php') ?>">Messages</a>

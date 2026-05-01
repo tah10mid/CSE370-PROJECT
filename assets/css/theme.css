@@ -376,6 +376,49 @@ body::after {
 }
 
 /* --------------------------------------------------------------------
+   Teacher cards (teachers/index.php)
+   -------------------------------------------------------------------- */
+.teacher-card { display: flex; flex-direction: column; gap: 14px; }
+.teacher-head { display: flex; align-items: center; gap: 14px; }
+.teacher-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 22px;
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    box-shadow: 0 6px 16px rgba(99,102,241,.30);
+    flex: 0 0 auto;
+}
+.teacher-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(99,102,241,.05);
+    border: 1px solid var(--card-border);
+}
+.teacher-meta dt {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+    font-weight: 600;
+}
+.teacher-meta dd { margin: 4px 0 0; font-weight: 500; color: var(--ink); }
+.teacher-section { display: flex; flex-direction: column; gap: 6px; }
+.teacher-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+}
+.teacher-card .actions { margin-top: 4px; }
+
+/* --------------------------------------------------------------------
    Tables
    -------------------------------------------------------------------- */
 .table th { background: rgba(99, 102, 241, 0.06); color: var(--ink); }
