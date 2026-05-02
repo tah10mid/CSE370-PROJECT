@@ -64,14 +64,22 @@
         });
     }
 
-    /* 5. Submit-button loading state. Does NOT preventDefault — let the form submit. */
+    /* 5. Submit-button loading state. Does NOT preventDefault — let the form submit.
+     *
+     *    Important: disabling the button synchronously inside the submit handler
+     *    excludes its name/value from the submitted form data (per WHATWG form
+     *    construction algorithm). For forms where the action lives on a named
+     *    button (Accept / Reject / Cancel / etc.), that wipes $_POST['action']
+     *    server-side. We defer the disable to the next macrotask so the form
+     *    data is collected with the button still enabled. */
     function setupSubmitSpinner() {
         document.querySelectorAll('form').forEach(function (form) {
-            form.addEventListener('submit', function () {
-                var btn = form.querySelector('button[type="submit"], button:not([type])');
+            form.addEventListener('submit', function (e) {
+                var btn = e.submitter
+                       || form.querySelector('button[type="submit"], button:not([type])');
                 if (!btn || btn.classList.contains('is-loading')) return;
                 btn.classList.add('is-loading');
-                btn.disabled = true;
+                setTimeout(function () { btn.disabled = true; }, 0);
                 /* Re-enable on bfcache restore so the back button doesn't leave it disabled. */
                 window.addEventListener('pageshow', function once() {
                     btn.classList.remove('is-loading');
